@@ -1,3 +1,4 @@
+import 'package:donut_app_2b_carmona/utils/donut_tile.dart';
 import 'package:flutter/material.dart';
 
 class DonutTab extends StatelessWidget {
@@ -13,7 +14,7 @@ class DonutTab extends StatelessWidget {
   DonutTab({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return GridView.builder( 
       //el gridview.builder es un widget que crea una cuadricula de elementos
       //elementos en nuestra lista
@@ -31,6 +32,7 @@ class DonutTab extends StatelessWidget {
           donutColor: donutsOnSale[index][2],
           donutImage: donutsOnSale[index][3],
         );
+        
       },
     );
   }
