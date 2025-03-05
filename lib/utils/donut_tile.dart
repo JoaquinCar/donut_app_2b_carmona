@@ -15,11 +15,39 @@ class DonutTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding( padding: const EdgeInsets.all(12.0),
+        child: Container(
       decoration: BoxDecoration(
-        color: donutColor,
-        borderRadius: BorderRadius.circular(10),
-        
+        color: donutColor[100],
+        borderRadius: BorderRadius.circular(24),
+
+    ),
+       child: Column(
+         children: [
+           //priceTag
+           Row(mainAxisAlignment: MainAxisAlignment.end,
+           children: [Container(
+             decoration: BoxDecoration(color:donutColor[200],
+           borderRadius: BorderRadius.only(
+             topRight: Radius.circular(24),bottomLeft: Radius.circular(24),)),
+             padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 18),
+             child: Text('\$$donutPrice',
+               style: TextStyle(
+                   fontWeight: FontWeight.bold,fontSize: 18,color: donutColor[800]),
+             ),
+             ),]
+             ,),
+
+           //DonutImage
+           Padding(padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 24),
+           child: Image.asset(donutImage),
+           )
+
+           //info
+
+           //fav and add icon
+         ],
+       ),
       ),
     );
   }

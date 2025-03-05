@@ -22,6 +22,7 @@ class DonutTab extends StatelessWidget {
       padding: const EdgeInsets.all(10), //espacio entre los elementos
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( //crea una cuadricula con un numero fijo de columnas
         crossAxisCount: 2, //numero de columnas
+        childAspectRatio: 1/1.5,
         crossAxisSpacing: 10, //espacio entre columnas
         mainAxisSpacing: 10, //espacio entre filas
       ),
