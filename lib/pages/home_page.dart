@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     MyTab(IconPath: 'lib/icons/smoothie.png'),
     MyTab(IconPath: 'lib/icons/pancakes.png'),
     MyTab(IconPath: 'lib/icons/pizza.png'),
+
   ]; //lista d
   @override
   Widget build(BuildContext context) {
