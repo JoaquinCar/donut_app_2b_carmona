@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -20,8 +20,7 @@ class _HomePageState extends State<HomePage> {
     MyTab(IconPath: 'lib/icons/smoothie.png'),
     MyTab(IconPath: 'lib/icons/pancakes.png'),
     MyTab(IconPath: 'lib/icons/pizza.png'),
-  ]; //lista de tabs
-
+  ]; //lista d
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -69,6 +68,43 @@ class _HomePageState extends State<HomePage> {
                   PancakesTab(),
                   PizzaTab(),
                 ],
+              ),
+            ),
+
+            //carrito
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('2 Items | \$45',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text('Delivery charges included',
+                  style: TextStyle(fontSize: 12),)
+
+                ],
+
+               )
+                  ),
+                  ElevatedButton(
+                      onPressed: () {  },
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.pink,
+                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12)),
+
+                      child: const Text('View Cart',
+                      style: TextStyle(color: Colors.white),),)
+
+                ],
+
               ),
             ),
           ],
