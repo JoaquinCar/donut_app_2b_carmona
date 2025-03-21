@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class DonutTile extends StatelessWidget {
-  final String donutFlavor;
-  final String donutPrice;
-  final dynamic donutColor;
+class PizzaTile extends StatelessWidget {
+  final String pizzaFlavor;
+  final String pizzaPrice;
+  final MaterialColor pizza;
   final String imageName;
-  final String donutStore;
+  final String pizzaStore;
   final Function(String, double) addToCart;
 
-  const DonutTile({super.key, required this.donutFlavor, required this.donutStore, required this.donutPrice, this.donutColor, required this.imageName, required this.addToCart});
+  const PizzaTile({super.key, required this.pizzaFlavor, required this.pizzaStore, required this.pizzaPrice, required this.pizza, required this.imageName, required this.addToCart});
 
   @override
   Widget build(BuildContext context) {
@@ -16,64 +16,67 @@ class DonutTile extends StatelessWidget {
         padding: EdgeInsets.all(12.0),
         child: Container(
             decoration: BoxDecoration(
-                color:donutColor[100], borderRadius: BorderRadius.circular(24)),
+                color: pizza[100], borderRadius: BorderRadius.circular(24)),
             child: Column(
               children: [
-                //PriceTag
+                // PriceTag
                 Row(
-                  //Alinea a la derecha
-
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                         decoration: BoxDecoration(
-                            color: donutColor[200],
+                            color: pizza[200],
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(24),
                                 bottomLeft: Radius.circular(24)
                             )
                         ),
-                        padding:
-                        const EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 8,
-                            horizontal:18
+                            horizontal: 18
                         ),
-                        child:Text(
-                            '\$$donutPrice',
+                        child: Text(
+                            '\$$pizzaPrice',
                             style: TextStyle(
-                                fontWeight:FontWeight.bold,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 18,
-                                color: donutColor[800]
+                                color: pizza[800]
                             )
                         )
                     )
                   ],
                 ),
-                //DonutPicture
+                // pizzaPicture
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
                   child: Image.asset(imageName),
                 ),
-                //DonutText
-                Text(donutFlavor, style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18)
+                // pizzaText
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(pizzaFlavor, style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      // pizzaStore
+                      Text(pizzaStore, style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 11,
+                          color: Colors.blueGrey)
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 4,
-                ),
-                //
-                Text(donutStore, style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 11,
-                    color: Colors.blueGrey)
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                //LoveIcon+AddButton
+                // LoveIcon+AddButton
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -81,7 +84,7 @@ class DonutTile extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           // Agregar al carrito
-                          addToCart(donutFlavor, double.parse(donutPrice));
+                          addToCart(pizzaFlavor, double.parse(pizzaPrice));
                         },
                         child: const Text(
                           "Add",

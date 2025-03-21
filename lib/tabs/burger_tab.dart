@@ -1,45 +1,50 @@
 import 'package:flutter/material.dart';
 
+import '../utils/burguer_tile.dart';
 import '../utils/donut_tile.dart';
 
 class BurgerTab extends StatelessWidget {
-  final List donutsOnSale = [
-    //[donutFlavor,donutPrice,donutColor,ImageName]
-    ["Ice Cream","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["Strawberry","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["Grape Ape","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["Choco","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
-    ["Crema de nata","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["fresas con crema","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["unicornio","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["peanut butter","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
+  final Function(String, double) addToCart;
 
+  BurgerTab({super.key, required this.addToCart});
+
+  final List burgerOnSale = [
+    // [burger, burgerPrice, burgerColor, imageName],
+    ["Normal", "Burger King", "36", Colors.blue, "lib/images/AjonjoliBurger.png"],
+    ["American", "McDonald", "45", Colors.red, "lib/images/AmericanBurger.png"],
+    ["Basic", "Carls Jr", "84", Colors.purple, "lib/images/Basic.png"],
+    ["Burger W/ Fries", "Angry Angus", "95", Colors.brown, 'lib/images/BurgerAndFries.png'],
+    ["Captain","Burger King", "36",Colors.lime, "lib/images/CaptainBurger.png"],
+    ["Combo","My Home","45",Colors.blue,"lib/images/ComboBurger.png"],
+    ["Large","Carls Jr","84",Colors.blueGrey,"lib/images/LargeBurger.png"],
+    ["Sabro","Angry Angus","95", Colors.pink,'lib/images/SabroBurger.png'],
   ];
-  BurgerTab({super.key});
 
   @override
   Widget build(BuildContext context) {
+    //Acomodar elementos en Cuadricula
     return GridView.builder(
-      //el gridview.builder es un widget que crea una cuadricula de elementos
-      //elementos en nuestra lista
-      itemCount: donutsOnSale.length, //numero de elementos en la lista
-      padding: const EdgeInsets.all(10), //espacio entre los elementos
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( //crea una cuadricula con un numero fijo de columnas
-        crossAxisCount: 2, //numero de columnas
-        childAspectRatio: 1/1.5,
-        crossAxisSpacing: 10, //espacio entre columnas
-        mainAxisSpacing: 10, //espacio entre filas
-      ),
-      itemBuilder: (context, index) {
-        return DonutTile(
-          donutFlavor: donutsOnSale[index][0],
-          store: donutsOnSale[index][1],
-          donutPrice: donutsOnSale[index][2],
-          donutColor: donutsOnSale[index][3],
-          donutImage: donutsOnSale[index][4],
-        );
+      //Eementos en nuestra lista
+        itemCount: burgerOnSale.length,
+        padding: const EdgeInsets.all(8.0),
+        //Organiza como distribuir
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //numero de columnas
+            crossAxisCount: 2,
+            childAspectRatio: 1/1.5
+        ),
+        itemBuilder: (context, index){
+          var burgerTile = BurgerTile(
+            burgerFlavor: burgerOnSale[index][0],
+            burgerStore: burgerOnSale[index][1],
+            burgerPrice: burgerOnSale[index][2],
+            imageName: burgerOnSale[index][4],
+            burger: burgerOnSale[index][3],
+            addToCart: addToCart,
 
-      },
+          );
+          return burgerTile;
+        }
     );
   }
 }

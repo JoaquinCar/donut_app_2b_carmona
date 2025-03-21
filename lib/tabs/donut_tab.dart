@@ -2,44 +2,46 @@ import 'package:donut_app_2b_carmona/utils/donut_tile.dart';
 import 'package:flutter/material.dart';
 
 class DonutTab extends StatelessWidget {
-  //lista de donas 
+  final Function(String, double) addToCart;
+
+  DonutTab({super.key, required this.addToCart});
   final List donutsOnSale = [
-    //[donutFlavor,donutPrice,donutColor,ImageName]
+    // [donutFlavor, donutPrice, donutColor, imageName],
+    ["Chocolate","Krispy Kreme", "36", Colors.blue, "lib/images/chocolate_donut.png"],
+    ["Strawberry","Dunkin Donuts","45", Colors.red,"lib/images/strawberry_donut.png"],
+    ["Grape","Costco","84", Colors.purple,"lib/images/grape_donut.png"],
+    ["Donut W/ Coffee","Walmart","95", Colors.brown, 'lib/images/donutwithcoffee.png'],
     ["Ice Cream","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["Strawberry","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["Grape Ape","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["Choco","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
-    ["Crema de nata","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["fresas con crema","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["unicornio","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["peanut butter","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
- 
+    ["Mint","Dunkin Donuts","45", Colors.red,"lib/images/mintdonut.png"],
+    ["Love","Costco","84", Colors.purple,"lib/images/lovedonut.png"],
+    ["Package","Walmart","95", Colors.brown, 'lib/images/threedonut.png'],
   ];
-  DonutTab({super.key});
 
   @override
-  Widget build(BuildContext context) {  
-    return GridView.builder( 
-      //el gridview.builder es un widget que crea una cuadricula de elementos
-      //elementos en nuestra lista
-      itemCount: donutsOnSale.length, //numero de elementos en la lista
-      padding: const EdgeInsets.all(10), //espacio entre los elementos
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( //crea una cuadricula con un numero fijo de columnas
-        crossAxisCount: 2, //numero de columnas
-        childAspectRatio: 1/1.5,
-        crossAxisSpacing: 10, //espacio entre columnas
-        mainAxisSpacing: 10, //espacio entre filas
-      ),
-      itemBuilder: (context, index) {
-        return DonutTile(
-          donutFlavor: donutsOnSale[index][0],
-          store: donutsOnSale[index][1],
-          donutPrice: donutsOnSale[index][2],
-          donutColor: donutsOnSale[index][3],
-          donutImage: donutsOnSale[index][4],
-        );
-        
-      },
+  Widget build(BuildContext context) {
+    //Acomodar elementos en Cuadricula
+    return GridView.builder(
+      //Eementos en nuestra lista
+        itemCount: donutsOnSale.length,
+        padding: const EdgeInsets.all(8.0),
+        //Organiza como distribuir
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //numero de columnas
+            crossAxisCount: 2,
+            childAspectRatio: 1/1.5
+        ),
+        itemBuilder: (context, index){
+          var donutTile = DonutTile(
+            donutFlavor: donutsOnSale[index][0],
+            donutStore: donutsOnSale[index][1],
+            donutPrice:donutsOnSale[index][2],
+            donutColor: donutsOnSale[index][3],
+            imageName:donutsOnSale[index][4],
+            addToCart: addToCart,
+
+          );
+          return donutTile;
+        }
     );
   }
 }

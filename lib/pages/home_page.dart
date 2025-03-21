@@ -10,48 +10,61 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> myTabs = [
+  //Lista de Tabs
+  List<Widget>  myTabs=[
     MyTab(IconPath: 'lib/icons/donut.png'),
     MyTab(IconPath: 'lib/icons/burger.png'),
     MyTab(IconPath: 'lib/icons/smoothie.png'),
     MyTab(IconPath: 'lib/icons/pancakes.png'),
     MyTab(IconPath: 'lib/icons/pizza.png'),
+  ];
 
-  ]; //lista d
+  // Estado del carrito
+  List<Map<String, dynamic>> cartItems = []; // Lista de elementos en el carrito
+  double totalPrice = 0.0; // Precio total
+
+  // Función para agregar un elemento al carrito
+  void addToCart(String name, double price) {
+    setState(() {
+      cartItems.add({"name": name, "price": price});
+      totalPrice += price;
+    }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5, //numero de elementos(tabs)
+      length:5,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          //Icono Izquierdo
-          leading: Icon(Icons.menu, color: Colors.grey[800]),
-          //Icono Derecho
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 18),
-              child: Icon(Icons.person, color: Colors.grey[800]),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            //icono izq
+            leading: Icon(
+              Icons.menu,
+              color:Colors.grey[850],
             ),
-          ],
-        ),
-        body: Column(
-          children: [
-            //texto principal
+            //icono derecho
+            actions: const[
+              Padding(
+                padding: EdgeInsets.only(right: 22.0),
+                child: Icon(Icons.person),
+              )
+            ],
+
+          ),
+          body:Column(children:[
+            //Texto principal
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 16),
               child: Row(
-                children: const [
-                  Text("I Want to ", style: TextStyle(fontSize: 32)),
-                  Text("Eat",
-                      style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline)), //tamano de letra y negrita
+                children: [
+                  Text("I want to ", style: TextStyle(fontSize: 30)),
+                  Text("Eat", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, decoration: TextDecoration.underline))//Tamañ
                 ],
               ),
             ),
@@ -59,57 +72,64 @@ class _HomePageState extends State<HomePage> {
             //TabBar
             TabBar(tabs: myTabs),
 
+
             //TabBarView
             Expanded(
-              child: TabBarView(
-                children: [
-                  DonutTab(),
-                  BurgerTab(),
-                  SmoothieTab(),
-                  PancakesTab(),
-                  PizzaTab(),
-                ],
+              child: TabBarView(children:[
+                DonutTab(addToCart: addToCart),
+                BurgerTab(addToCart: addToCart),
+                SmoothieTab(addToCart: addToCart),
+                PancakesTab(addToCart: addToCart),
+                PizzaTab(addToCart: addToCart),
+              ]
               ),
             ),
 
-            //carrito
+
+
+            //Carrito
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               child: Row(
+                //Poner los elementos en los extremos de la fila
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(padding: EdgeInsets.only(left: 28),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('2 Items | \$45',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${cartItems.length} items | \$${totalPrice.toStringAsFixed(2)}",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        Text("Delivery Charges Included",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
                     ),
                   ),
-                  Text('Delivery charges included',
-                  style: TextStyle(fontSize: 12),)
-
-                ],
-
-               )
-                  ),
                   ElevatedButton(
-                      onPressed: () {  },
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.pink,
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12)),
-
-                      child: const Text('View Cart',
-                      style: TextStyle(color: Colors.white),),)
-
+                      onPressed: (){},
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.pink[200],
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 9,
+                              vertical: 10
+                          )
+                      ),
+                      child: Text('View Cart',
+                          style: TextStyle(color: Colors.black)
+                      )
+                  )
                 ],
-
               ),
-            ),
+            )
           ],
-        ),
+          )
       ),
     );
   }

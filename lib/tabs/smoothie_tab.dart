@@ -1,43 +1,46 @@
 import 'package:flutter/material.dart';
 import '../utils/donut_tile.dart';
+import '../utils/smoothie_tile.dart';
 class SmoothieTab extends StatelessWidget {
-  final List donutsOnSale = [
-    //[donutFlavor,donutPrice,donutColor,ImageName]
-    ["Ice Cream","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["Strawberry","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["Grape Ape","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["Choco","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
-    ["Crema de nata","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["fresas con crema","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["unicornio","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["peanut butter","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
-
+  final List smoothieOnSale = [
+    // [smoothie, smoothiePrice, smoothieColor, imageName],
+    ["Ice Cream","Krispy Kreme", "36", Colors.blue, "lib/images/ameicansmoothie.png"],
+    ["Strawberry","Dunkin smoothies","45", Colors.red,"lib/images/cocosmoothie.png"],
+    ["Grape","Costco","84", Colors.purple,"lib/images/gasoline.png"],
+    ["Choco","Walmart","95", Colors.brown, 'lib/images/mangosmoothie.png'],
+    ["Ice Cream","Krispy Kreme", "36", Colors.blue, "lib/images/mintsmoothie.png"],
+    ["Strawberry","Dunkin pizzas","45", Colors.red,"lib/images/secretsmoothie.png"],
+    ["Grape","Costco","84", Colors.purple,"lib/images/strawberrysmoothie.png"],
+    ["Choco","Walmart","95", Colors.brown, 'lib/images/watermelonsmoothie.png'],
   ];
-  SmoothieTab({super.key});
+  final Function(String, double) addToCart;
+
+  SmoothieTab({super.key, required this.addToCart});
 
   @override
   Widget build(BuildContext context) {
+    //Acomodar elementos en Cuadricula
     return GridView.builder(
-      //el gridview.builder es un widget que crea una cuadricula de elementos
-      //elementos en nuestra lista
-      itemCount: donutsOnSale.length, //numero de elementos en la lista
-      padding: const EdgeInsets.all(10), //espacio entre los elementos
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( //crea una cuadricula con un numero fijo de columnas
-        crossAxisCount: 2, //numero de columnas
-        childAspectRatio: 1/1.5,
-        crossAxisSpacing: 10, //espacio entre columnas
-        mainAxisSpacing: 10, //espacio entre filas
-      ),
-      itemBuilder: (context, index) {
-        return DonutTile(
-          donutFlavor: donutsOnSale[index][0],
-          store: donutsOnSale[index][1],
-          donutPrice: donutsOnSale[index][2],
-          donutColor: donutsOnSale[index][3],
-          donutImage: donutsOnSale[index][4],
-        );
-
-      },
+      //Eementos en nuestra lista
+        itemCount: smoothieOnSale.length,
+        padding: const EdgeInsets.all(8.0),
+        //Organiza como distribuir
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //numero de columnas
+            crossAxisCount: 2,
+            childAspectRatio: 1/1.5
+        ),
+        itemBuilder: (context, index){
+          var smoothieTile = SmoothieTile(
+            smoothieFlavor: smoothieOnSale[index][0],
+            smoothieStore: smoothieOnSale[index][1],
+            smoothiePrice: smoothieOnSale[index][2],
+            imageName: smoothieOnSale[index][4],
+            smoothie: smoothieOnSale[index][3],
+            addToCart: addToCart,
+          );
+          return smoothieTile;
+        }
     );
   }
 }

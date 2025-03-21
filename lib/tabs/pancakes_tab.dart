@@ -1,44 +1,49 @@
 import 'package:flutter/material.dart';
 import '../utils/donut_tile.dart';
+import '../utils/pancakes_tile.dart';
+import 'pancakes_tab.dart';
 
 class PancakesTab extends StatelessWidget {
-  final List donutsOnSale = [
-    //[donutFlavor,donutPrice,donutColor,ImageName]
-    ["Ice Cream","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["Strawberry","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["Grape Ape","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["Choco","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
-    ["Crema de nata","Krispy Kreme", "36", Colors.blue, "lib/images/icecream_donut.png"],
-    ["fresas con crema","Dunkin's","45", Colors.pink, "lib/images/strawberry_donut.png"],
-    ["unicornio","Krispy Kreme", "84", Colors.purple, "lib/images/grape_donut.png"],
-    ["peanut butter","Dunkin's", "95", Colors.brown, "lib/images/chocolate_donut.png"],
-
+  final List pancakesOnSale = [
+    // [pancakes, pancakesPrice, pancakesColor, imageName],
+    ["BlackBerry","Vips", "36", Colors.blue, "lib/images/blackberrypancake.png"],
+    ["Butter","Dunkin","45", Colors.red,"lib/images/butterpancake.png"],
+    ["Cherry","IHope","84", Colors.purple,"lib/images/cherrypancake.png"],
+    ["Dirty","Walmart","95", Colors.brown, 'lib/images/dirtytpancake.png'],
+    ["House","Vips", "36", Colors.blue, "lib/images/housepancake.png"],
+    ["Strawberry","Dunkin","45", Colors.red,"lib/images/straweberrypancake.png"],
+    ["Lovely","IHope","84", Colors.purple,"lib/images/lovelypancake.png"],
+    ["Simple","Walmart","95", Colors.brown, 'lib/images/simplepancake.png'],
   ];
-  PancakesTab({super.key});
+  final Function(String, double) addToCart;
+
+  PancakesTab({super.key, required this.addToCart});
 
   @override
   Widget build(BuildContext context) {
+    //Acomodar elementos en Cuadricula
     return GridView.builder(
-      //el gridview.builder es un widget que crea una cuadricula de elementos
-      //elementos en nuestra lista
-      itemCount: donutsOnSale.length, //numero de elementos en la lista
-      padding: const EdgeInsets.all(10), //espacio entre los elementos
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( //crea una cuadricula con un numero fijo de columnas
-        crossAxisCount: 2, //numero de columnas
-        childAspectRatio: 1/1.5,
-        crossAxisSpacing: 10, //espacio entre columnas
-        mainAxisSpacing: 10, //espacio entre filas
-      ),
-      itemBuilder: (context, index) {
-        return DonutTile(
-          donutFlavor: donutsOnSale[index][0],
-          store: donutsOnSale[index][1],
-          donutPrice: donutsOnSale[index][2],
-          donutColor: donutsOnSale[index][3],
-          donutImage: donutsOnSale[index][4],
-        );
+      //Eementos en nuestra lista
+        itemCount: pancakesOnSale.length,
+        padding: const EdgeInsets.all(8.0),
+        //Organiza como distribuir
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //numero de columnas
+            crossAxisCount: 2,
+            childAspectRatio: 1/1.5
+        ),
+        itemBuilder: (context, index){
+          var pancakesTile = PancakesTile(
+            pancakesFlavor: pancakesOnSale[index][0],
+            pancakesStore: pancakesOnSale[index][1],
+            pancakesPrice: pancakesOnSale[index][2],
+            imageName: pancakesOnSale[index][4],
+            pancakes: pancakesOnSale[index][3],
+            addToCart: addToCart,
 
-      },
+          );
+          return pancakesTile;
+        }
     );
   }
 }
