@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:donut_app_2b_carmona/pages/supermarket_page.dart';
 import 'package:donut_app_2b_carmona/tabs/burger_tab.dart';
 import 'package:donut_app_2b_carmona/tabs/donut_tab.dart';
 import 'package:donut_app_2b_carmona/tabs/pancakes_tab.dart';
 import 'package:donut_app_2b_carmona/tabs/pizza_tab.dart';
 import 'package:donut_app_2b_carmona/tabs/smoothie_tab.dart';
 import 'package:donut_app_2b_carmona/utils/my_tab.dart';
-import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //Lista de Tabs
-  List<Widget>  myTabs=[
+  List<Widget> myTabs = [
     MyTab(IconPath: 'lib/icons/donut.png'),
     MyTab(IconPath: 'lib/icons/burger.png'),
     MyTab(IconPath: 'lib/icons/smoothie.png'),
@@ -23,113 +23,136 @@ class _HomePageState extends State<HomePage> {
     MyTab(IconPath: 'lib/icons/pizza.png'),
   ];
 
-  // Estado del carrito
-  List<Map<String, dynamic>> cartItems = []; // Lista de elementos en el carrito
-  double totalPrice = 0.0; // Precio total
+  // Cart state
+  List<Map<String, dynamic>> cartItems = [];
+  double totalPrice = 0.0;
 
-  // Función para agregar un elemento al carrito
+  // Function to add items to the cart
   void addToCart(String name, double price) {
     setState(() {
       cartItems.add({"name": name, "price": price});
       totalPrice += price;
-    }
-    );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length:5,
+      length: myTabs.length,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            //icono izq
-            leading: Icon(
-              Icons.menu,
-              color:Colors.grey[850],
-            ),
-            //icono derecho
-            actions: const[
-              Padding(
-                padding: EdgeInsets.only(right: 22.0),
-                child: Icon(Icons.person),
-              )
+        // Drawer for navigation
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 218, 113, 148),
+                ),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(color: Colors.white, fontSize: 24),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.store),
+                title: const Text('SuperMarket'),
+                onTap: () {
+                  Navigator.pop(context); // Close drawer
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SuperMarketPage()),
+                  );
+                },
+              ),
             ],
-
           ),
-          body:Column(children:[
-            //Texto principal
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Colors.grey[800]),
+          actions: const [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 16),
+              padding: EdgeInsets.only(right: 24.0),
+              child: Icon(Icons.person),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 36, vertical: 18),
               child: Row(
                 children: [
-                  Text("I want to ", style: TextStyle(fontSize: 30)),
-                  Text("Eat", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, decoration: TextDecoration.underline))//Tamañ
+                  Text(
+                    "I want to ",
+                    style: TextStyle(fontSize: 32),
+                  ),
+                  Text(
+                    "Eat",
+                    style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  )
                 ],
               ),
             ),
-
-            //TabBar
             TabBar(tabs: myTabs),
-
-
-            //TabBarView
             Expanded(
-              child: TabBarView(children:[
-                DonutTab(addToCart: addToCart),
-                BurgerTab(addToCart: addToCart),
-                SmoothieTab(addToCart: addToCart),
-                PancakesTab(addToCart: addToCart),
-                PizzaTab(addToCart: addToCart),
-              ]
+              child: TabBarView(
+                children: [
+                  DonutTab(addToCart: addToCart),
+                  BurgerTab(addToCart: addToCart),
+                  SmoothieTab(addToCart: addToCart),
+                  PancakesTab(addToCart: addToCart),
+                  PizzaTab(addToCart: addToCart),
+                ],
               ),
             ),
-
-
-
-            //Carrito
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.all(16),
               child: Row(
-                //Poner los elementos en los extremos de la fila
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 26),
+                    padding: const EdgeInsets.only(left: 28),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${cartItems.length} items | \$${totalPrice.toStringAsFixed(2)}",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold
-                          ),
+                        Text(
+                          '${cartItems.length} Items | \$${totalPrice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        Text("Delivery Charges Included",
+                        const Text(
+                          'Delivery Charges Included',
                           style: TextStyle(fontSize: 12),
                         ),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.pink[200],
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 9,
-                              vertical: 10
-                          )
-                      ),
-                      child: Text('View Cart',
-                          style: TextStyle(color: Colors.black)
-                      )
+                    onPressed: () {
+                      // Handle cart view
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                        const Color.fromARGB(255, 218, 113, 148),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12)),
+                    child: const Text(
+                      'View Cart',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   )
                 ],
               ),
             )
           ],
-          )
+        ),
       ),
     );
   }

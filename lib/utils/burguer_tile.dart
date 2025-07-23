@@ -85,7 +85,7 @@ class BurgerTile extends StatelessWidget {
                         child: const Text(
                           "Add",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline),
                         ),
